@@ -1,0 +1,52 @@
+# ============================================================
+# Measurement Pipeline Configuration
+# Campaign: PROMO-2025-Q4-HOLIDAY
+# Owner: Measurement & Analytics Team
+# ============================================================
+
+campaign:
+  id: "PROMO-2025-Q4-HOLIDAY"
+  name: "Q4 2025 Holiday Promotion"
+  start_fiscal_week: 202540
+  end_fiscal_week: 202551
+  pre_period_weeks: 13           # fiscal weeks 27-39
+  post_period_weeks: 12          # fiscal weeks 40-51
+  total_promo_cost: 1200000      # $1.2M total campaign spend
+
+data:
+  n_stores: 500
+  treatment_fraction: 0.4
+  seed: 42
+
+propensity_score:
+  caliper: 0.05
+  n_neighbors: 1
+  covariates:
+    - store_size
+    - avg_weekly_revenue
+    - competitor_density
+    - median_household_income
+    - foot_traffic_index
+
+ab_test:
+  significance_level: 0.05
+  power: 0.80
+  minimum_detectable_effect: 0.03
+
+instrumental_variables:
+  instruments:
+    - warehouse_distance
+    - regional_ad_spend
+
+kpis:
+  primary:
+    - incremental_revenue
+    - incremental_units_sold
+  secondary:
+    - customer_acquisition_rate
+    - basket_size_change
+    - margin_impact
+
+pipeline:
+  output_dir: "data/processed"
+  report_dir: "reports"
