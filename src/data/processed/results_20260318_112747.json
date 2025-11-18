@@ -1,0 +1,56 @@
+{
+  "psm": {
+    "att": 2137.539545637331,
+    "se": 1286.738775587903,
+    "p_value": 0.09827877533524298,
+    "ci": [
+      -400.1718804979687,
+      4675.25097177263
+    ],
+    "n_matched": 196
+  },
+  "did": {
+    "att": -420.1864172436742,
+    "se": 111.43867738889546,
+    "p_value": 0.000162880475806856,
+    "parallel_trends": "True"
+  },
+  "attribution": {
+    "promotion_effect": -0.5310296955570979,
+    "promotion_share": 100,
+    "seasonality_effect": 1.673907449812063e-18,
+    "trend_effect": 0.0001817424956775844
+  },
+  "kpi_report": [
+    {
+      "kpi": "Naive Revenue Lift (%)",
+      "value": 24.266453315807695,
+      "note": "Biased - includes selection effects"
+    },
+    {
+      "kpi": "Causal ATT (per store-week)",
+      "value": 2137.539545637331,
+      "note": "Unbiased estimate from PSM/IV"
+    },
+    {
+      "kpi": "Total Incremental Revenue",
+      "value": 633053085826.3016,
+      "note": "Extrapolated to full treatment group"
+    },
+    {
+      "kpi": "ROAS",
+      "value": NaN,
+      "note": "Revenue per dollar spent"
+    },
+    {
+      "kpi": "Treated Stores",
+      "value": 197.0,
+      "note": ""
+    },
+    {
+      "kpi": "Observation Weeks",
+      "value": 52.0,
+      "note": ""
+    }
+  ]
+}
