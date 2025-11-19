@@ -56,4 +56,5 @@ def _validate_panel(df: pd.DataFrame) -> None:
     if not set(df["treated"].unique()).issubset({0, 1}):
         raise ValueError("Treatment column must be binary (0/1)")
     if df["revenue"].min() <= 0:
-        raise ValueError("Revenue must be positive")
+        n_bad = (df["revenue"] <= 0).sum()
+        raise ValueError(f"Revenue must be positive — found {n_bad} non-positive rows")
