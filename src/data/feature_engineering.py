@@ -1,4 +1,9 @@
-"""Feature engineering for causal models."""
+"""
+Feature engineering for causal models.
+
+Transforms raw store and transaction data into covariates suitable
+for propensity score estimation and causal analysis.
+"""
 import pandas as pd
 import numpy as np
 from typing import List
