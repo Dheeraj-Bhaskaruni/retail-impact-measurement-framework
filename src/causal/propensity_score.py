@@ -109,7 +109,10 @@ def run_psm(df: pd.DataFrame,
     matches = match_nearest_neighbor(ps, df[treatment_col].values, caliper=caliper)
 
     if len(matches) == 0:
-        raise ValueError("No matches found within caliper. Try increasing caliper.")
+        raise ValueError(
+            f"No matches found within caliper={caliper}. "
+            f"Try increasing caliper or check propensity score overlap."
+        )
 
     treated_outcomes = np.array([df.iloc[m[0]][outcome_col] for m in matches])
     control_outcomes = np.array([df.iloc[m[1]][outcome_col] for m in matches])
