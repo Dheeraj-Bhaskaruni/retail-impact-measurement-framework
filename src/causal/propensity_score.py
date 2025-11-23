@@ -33,7 +33,7 @@ def estimate_propensity_scores(df: pd.DataFrame,
     X = df[covariates].values
     y = df[treatment_col].values
 
-    model = LogisticRegression(max_iter=1000, random_state=42)
+    model = LogisticRegression(max_iter=1000, solver="lbfgs", random_state=42)
     model.fit(X, y)
     return model.predict_proba(X)[:, 1]
 
