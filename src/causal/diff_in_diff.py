@@ -45,6 +45,8 @@ def estimate_did(panel: pd.DataFrame,
     X = pd.concat([df[["treat_post"]], entity_dummies, time_dummies], axis=1)
     X = sm.add_constant(X)
 
+    # Cluster standard errors at the store level to account for
+    # within-store serial correlation across weeks
     model = sm.OLS(df[outcome_col], X).fit(cov_type="cluster",
                                             cov_kwds={"groups": df[entity_col]})
 
