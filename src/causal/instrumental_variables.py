@@ -51,6 +51,7 @@ def two_stage_least_squares(df: pd.DataFrame,
         r_matrix[i, col_idx] = 1
     f_test = first_stage.f_test(r_matrix)
     f_stat = float(f_test.fvalue)
+    # Staiger & Stock (1997): F < 10 indicates weak instruments
 
     # Stage 2
     df = df.copy()
