@@ -82,10 +82,16 @@ def analyze_ab_test(control: np.ndarray,
 
 
 def _welch_dof(x: np.ndarray, y: np.ndarray) -> float:
-    """Welch-Satterthwaite degrees of freedom."""
+    """Welch-Satterthwaite degrees of freedom.
+
+    More accurate than assuming equal df when sample sizes or
+    variances differ between groups.
+    """
     vx = np.var(x, ddof=1) / len(x)
     vy = np.var(y, ddof=1) / len(y)
-    return (vx + vy)**2 / (vx**2 / (len(x) - 1) + vy**2 / (len(y) - 1))
+    numerator = (vx + vy) ** 2
+    denominator = vx**2 / (len(x) - 1) + vy**2 / (len(y) - 1)
+    return numerator / denominator if denominator > 0 else min(len(x), len(y)) - 1
 
 
 def bonferroni_correction(p_values: List[float],
