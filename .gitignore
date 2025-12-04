@@ -34,3 +34,10 @@ logs/
 # Secrets
 .env
 credentials/
+
+# Coverage
+htmlcov/
+.coverage
+
+# Docker
+*.tar
