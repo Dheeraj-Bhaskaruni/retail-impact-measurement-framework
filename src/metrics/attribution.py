@@ -57,6 +57,8 @@ def decompose_revenue(panel: pd.DataFrame,
     total = df.groupby(treatment_col)["log_revenue"].mean()
     total_change = total.get(1, 0) - total.get(0, 0)
 
+    # Clamp promotion share to [0, 100] — can exceed 100% if other
+    # components partially offset the promotion effect
     promo_share = abs(promo) / abs(total_change) * 100 if total_change != 0 else 0
 
     return AttributionResult(
