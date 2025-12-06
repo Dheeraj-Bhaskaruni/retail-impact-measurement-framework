@@ -109,7 +109,11 @@ class KPICalculator:
 
     def compute_roas(self, incremental_revenue: float,
                      promotion_cost: float) -> float:
-        """Return on Ad Spend."""
+        """Return on Ad Spend.
+
+        ROAS > 1.0 means the promotion generated more revenue
+        than it cost. Industry benchmark for retail: 3-5x.
+        """
         if promotion_cost == 0:
             return float("inf")
         return incremental_revenue / promotion_cost
