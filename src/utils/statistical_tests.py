@@ -38,7 +38,11 @@ def bootstrap_ci(data: np.ndarray, stat_func=np.mean,
 def permutation_test(treatment: np.ndarray, control: np.ndarray,
                      n_permutations: int = 10000,
                      seed: int = 42) -> Dict[str, float]:
-    """Permutation test for difference in means (non-parametric)."""
+    """Permutation test for difference in means (non-parametric).
+
+    Does not assume any distributional form — valid even when
+    t-test assumptions (normality, equal variance) are violated.
+    """
     rng = np.random.default_rng(seed)
     observed_diff = np.mean(treatment) - np.mean(control)
     combined = np.concatenate([treatment, control])
