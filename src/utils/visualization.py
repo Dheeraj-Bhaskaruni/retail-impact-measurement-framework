@@ -10,7 +10,10 @@ from typing import Optional
 def plot_propensity_distribution(ps_treated: np.ndarray,
                                  ps_control: np.ndarray,
                                  save_path: Optional[str] = None) -> plt.Figure:
-    """Plot propensity score distributions for treated vs control."""
+    """Plot propensity score distributions for treated vs control.
+
+    Good overlap between distributions indicates matching is feasible.
+    """
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.hist(ps_treated, bins=50, alpha=0.5, label="Treated", density=True, color="#2196F3")
     ax.hist(ps_control, bins=50, alpha=0.5, label="Control", density=True, color="#FF9800")
