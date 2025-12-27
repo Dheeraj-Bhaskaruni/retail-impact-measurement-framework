@@ -93,6 +93,19 @@ class MeasurementPipeline:
 
         # Step 7: Save results
         self._save_results()
+        # Health checks
+        try:
+            from pipeline.monitoring import run_health_checks
+            health = run_health_checks(self.results, self.config)
+            self.results["health"] = {
+                "status": health.overall_status,
+                "passed": health.n_passed,
+                "warnings": health.n_warnings,
+                "failures": health.n_failures,
+            }
+        except ImportError:
+            pass
+
         logger.info("Pipeline complete")
         return self.results
 
