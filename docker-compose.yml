@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  pipeline:
+    build: .
+    container_name: measurement-pipeline
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data/raw:/app/data/raw
+      - ./data/processed:/app/data/processed
+    command: python -m pipeline.measurement_pipeline
+
+  test:
+    build: .
+    container_name: measurement-tests
+    working_dir: /app
+    command: python -m pytest tests/ -v --tb=short
+
+  notebook:
+    build: .
+    container_name: measurement-notebooks
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --notebook-dir=/app/notebooks
