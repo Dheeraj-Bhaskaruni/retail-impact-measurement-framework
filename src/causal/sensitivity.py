@@ -46,7 +46,10 @@ def rosenbaum_bounds(treated_outcomes: np.ndarray,
     n = len(diffs)
 
     if n == 0:
-        raise ValueError("No matched pairs provided")
+        raise ValueError("No matched pairs provided — run PSM first")
+    if n < 10:
+        import warnings
+        warnings.warn(f"Only {n} matched pairs — Rosenbaum bounds may be unreliable")
 
     gammas = np.linspace(gamma_range[0], gamma_range[1], n_steps)
     p_uppers = []
