@@ -28,6 +28,13 @@ def load_panel_data(path: Optional[str] = None) -> pd.DataFrame:
     """
     if path is None:
         path = Path(__file__).parent.parent.parent / "data" / "raw" / "panel_data.csv"
+
+    if not Path(path).exists():
+        raise FileNotFoundError(
+            f"Panel data not found at {path}. "
+            "Run 'make data' or 'python data/synthetic/generate_data.py' first."
+        )
+
     df = pd.read_csv(path)
     _validate_panel(df)
     return df
