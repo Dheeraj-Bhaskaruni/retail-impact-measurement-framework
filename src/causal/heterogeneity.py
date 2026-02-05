@@ -42,6 +42,9 @@ def estimate_subgroup_effects(panel: pd.DataFrame,
         control = subset[subset[treatment_col] == 0][outcome_col]
 
         if len(treated) < 10 or len(control) < 10:
+            import warnings
+            warnings.warn(f"Skipping subgroup '{sg}' — too few observations "
+                          f"(treated={len(treated)}, control={len(control)})")
             continue
 
         diff = treated.mean() - control.mean()
