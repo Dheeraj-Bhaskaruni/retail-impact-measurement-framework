@@ -71,7 +71,11 @@ def _test_parallel_trends(panel: pd.DataFrame,
                           treatment_col: str,
                           time_col: str,
                           post_period_start: int) -> float:
-    """Test whether treatment and control had parallel pre-treatment trends."""
+    """Test whether treatment and control had parallel pre-treatment trends.
+
+    Regresses pre-period outcome on treat*time interaction; insignificant
+    coefficient (p > 0.05) supports the parallel trends assumption.
+    """
     pre = panel[panel[time_col] < post_period_start].copy()
     pre["treat_time"] = pre[treatment_col] * pre[time_col]
     X = sm.add_constant(pre[["treat_time", treatment_col, time_col]])
