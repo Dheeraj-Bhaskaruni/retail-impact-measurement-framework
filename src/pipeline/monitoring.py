@@ -101,7 +101,18 @@ def run_health_checks(results: Dict, config: Dict) -> PipelineHealthReport:
             value=promo_share,
         ))
 
-    # 5. Data completeness
+    # 5. ROAS sanity check
+    if "kpi_report" in results:
+        roas = results["kpi_report"].get("roas", 0)
+        if roas is not None and roas > 0:
+            checks.append(HealthCheck(
+                name="roas_sanity",
+                status="pass" if 0.5 < roas < 20 else "warn",
+                message=f"ROAS = {roas:.1f}x (expected 1-10x for retail)",
+                value=roas,
+            ))
+
+    # 6. Data completeness
     if "psm" in results:
         checks.append(HealthCheck(
             name="data_completeness",
