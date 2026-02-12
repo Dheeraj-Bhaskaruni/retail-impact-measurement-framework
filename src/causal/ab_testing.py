@@ -111,7 +111,11 @@ def sequential_test(data_stream: List[float],
                     control_std: float,
                     alpha: float = 0.05,
                     beta: float = 0.20) -> dict:
-    """Sequential probability ratio test (SPRT) for early stopping."""
+    """Sequential probability ratio test (SPRT) for early stopping.
+
+    Allows peeking at results during the experiment without inflating
+    the false positive rate — unlike repeated t-tests.
+    """
     h0_mean = control_mean
     h1_mean = control_mean * 1.05
     log_a = np.log((1 - beta) / alpha)
