@@ -52,3 +52,5 @@ pipeline:
   report_dir: "reports"
   log_level: "INFO"
   health_check_enabled: true
+  max_caliper: 0.20
+  min_matched_pairs: 30
