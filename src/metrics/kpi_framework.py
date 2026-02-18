@@ -77,6 +77,14 @@ KPI_REGISTRY: Dict[str, KPIDefinition] = {
         unit="USD",
         direction="higher_is_better",
     ),
+    "cost_per_incremental_unit": KPIDefinition(
+        name="Cost Per Incremental Unit",
+        category=KPICategory.OPERATIONAL,
+        description="Promotion spend required to generate one additional unit sale",
+        formula="promotion_cost / incremental_units",
+        unit="USD",
+        direction="lower_is_better",
+    ),
 }
 
 
