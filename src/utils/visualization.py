@@ -71,7 +71,11 @@ def plot_parallel_trends(panel: pd.DataFrame,
 
 def plot_attribution_waterfall(attribution_dict: dict,
                                 save_path: Optional[str] = None) -> plt.Figure:
-    """Waterfall chart showing revenue attribution decomposition."""
+    """Waterfall chart showing revenue attribution decomposition.
+
+    Shows how much of the treatment-control revenue gap is explained
+    by each component: promotion, seasonality, trend, and residual.
+    """
     components = ["Promotion", "Seasonality", "Trend", "Residual"]
     values = [
         attribution_dict["promotion_effect"],
