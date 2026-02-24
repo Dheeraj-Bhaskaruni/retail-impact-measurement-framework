@@ -23,6 +23,7 @@ def create_pre_treatment_features(panel: pd.DataFrame,
     ).reset_index()
 
     agg["pre_revenue_cv"] = agg["pre_std_revenue"] / agg["pre_avg_revenue"]
+    agg["pre_revenue_cv"] = agg["pre_revenue_cv"].fillna(0)
     return agg
 
 
