@@ -58,3 +58,45 @@ def results_to_csv(results: Dict[str, Any], output_path: str):
     if "kpi_report" in results:
         df = pd.DataFrame(results["kpi_report"])
         df.to_csv(output_path, index=False)
+
+
+def results_to_slack_block(results: Dict[str, Any], campaign_id: str = "") -> dict:
+    """Format results as a Slack Block Kit message payload.
+
+    Usage: post to Slack via webhook in the Databricks workflow.
+    """
+    blocks = [
+        {
+            "type": "header",
+            "text": {"type": "plain_text", "text": f"Measurement Results — {campaign_id}"}
+        },
+        {"type": "divider"},
+    ]
+
+    if "psm" in results:
+        p = results["psm"]
+        sig = ":white_check_mark:" if p["p_value"] < 0.05 else ":x:"
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*PSM ATT:* ${p['att']:,.2f}  |  *p-value:* {p['p_value']:.4f} {sig}"
+            }
+        })
+
+    if "health" in results:
+        h = results["health"]
+        emoji = {
+            "healthy": ":large_green_circle:",
+            "degraded": ":large_yellow_circle:",
+            "critical": ":red_circle:",
+        }.get(h["status"], ":white_circle:")
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*Pipeline Health:* {emoji} {h['status'].upper()}"
+            }
+        })
+
+    return {"blocks": blocks}
