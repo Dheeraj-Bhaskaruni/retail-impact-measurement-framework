@@ -51,13 +51,17 @@ def match_nearest_neighbor(propensity_scores: np.ndarray,
     nn.fit(control_scores)
 
     matches = []
+    used_controls = set()
     for t_idx in treated_idx:
         t_score = propensity_scores[t_idx].reshape(1, -1)
         distances, indices = nn.kneighbors(t_score)
 
         for dist, c_local_idx in zip(distances[0], indices[0]):
-            if dist <= caliper:
-                matches.append((t_idx, control_idx[c_local_idx]))
+            c_idx = control_idx[c_local_idx]
+            if dist <= caliper and c_idx not in used_controls:
+                matches.append((t_idx, c_idx))
+                used_controls.add(c_idx)
+                break
 
     return matches
 
