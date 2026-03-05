@@ -45,3 +45,16 @@ def test_cross_method_agreement_check(healthy_results):
     report = run_health_checks(healthy_results, config)
     agreement_checks = [c for c in report.checks if c.name == "cross_method_agreement"]
     assert len(agreement_checks) == 1
+
+
+def test_roas_sanity_check():
+    """ROAS health check should flag implausible values."""
+    results = {
+        "psm": {"att": 2100.0, "se": 500.0, "p_value": 0.001, "n_matched": 150},
+        "kpi_report": {"roas": 50.0},  # Implausibly high
+    }
+    config = {"campaign": {"id": "PROMO-TEST"}}
+    report = run_health_checks(results, config)
+    roas_checks = [c for c in report.checks if c.name == "roas_sanity"]
+    assert len(roas_checks) == 1
+    assert roas_checks[0].status == "warn"
