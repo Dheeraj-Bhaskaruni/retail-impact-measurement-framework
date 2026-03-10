@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.3.0] - 2026-03-10
+### Added
+- Slack Block Kit export for automated pipeline alerts
+- ROAS sanity check in pipeline health monitoring
+- Cost-per-incremental-unit KPI
+- Sensitivity & heterogeneity analysis notebook
+
+### Fixed
+- One-to-one matching without replacement in PSM (was allowing duplicate controls)
+- NaN coefficient of variation when store has zero revenue variance
+
+### Changed
+- PSM caliper and min-pairs thresholds now configurable via config.yaml
+
 ## [1.2.0] - 2025-12-28
 ### Added
 - CLI interface (`measure run`, `measure validate`, `measure report`)
