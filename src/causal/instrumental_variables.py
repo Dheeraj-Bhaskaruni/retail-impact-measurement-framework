@@ -82,7 +82,12 @@ def sargan_test(df: pd.DataFrame,
                 treatment_col: str,
                 instrument_cols: List[str],
                 covariate_cols: Optional[List[str]] = None) -> dict:
-    """Sargan overidentification test for instrument validity."""
+    """Sargan overidentification test for instrument validity.
+
+    Only applicable when the model is overidentified (more instruments
+    than endogenous regressors). A significant test statistic rejects
+    the null that all instruments are valid.
+    """
     if len(instrument_cols) <= 1:
         return {"test": "sargan", "result": "exactly identified - test not applicable"}
 
