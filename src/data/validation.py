@@ -39,10 +39,18 @@ class WeeklyOutcomeRecord(BaseModel):
     week: int = Field(ge=1)
     revenue: float = Field(gt=0)
     units_sold: int = Field(ge=0)
-    basket_size: float
+    basket_size: float = Field(gt=0)
     new_customers: int = Field(ge=0)
     treated: int = Field(ge=0, le=1)
     post_period: int = Field(ge=0, le=1)
+
+    @field_validator("revenue")
+    @classmethod
+    def revenue_not_extreme(cls, v):
+        """Flag single-week store revenue over $10M as likely data error."""
+        if v > 10_000_000:
+            raise ValueError(f"Weekly revenue ${v:,.0f} exceeds $10M — likely data error")
+        return v
 
 
 class PipelineConfig(BaseModel):
