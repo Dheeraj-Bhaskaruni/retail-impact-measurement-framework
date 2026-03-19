@@ -55,7 +55,8 @@ retail-impact-measurement-framework/
 │   ├── 02_propensity_score_matching.ipynb    # PSM analysis + balance diagnostics
 │   ├── 03_ab_test_analysis.ipynb             # Power analysis + test design
 │   ├── 04_instrumental_variables.ipynb       # IV/2SLS + instrument validity
-│   └── 05_dashboard_and_reporting.ipynb      # Executive summary + attribution
+│   ├── 05_dashboard_and_reporting.ipynb      # Executive summary + attribution
+│   └── 06_sensitivity_and_heterogeneity.ipynb # Rosenbaum bounds + HTE analysis
 ├── src/
 │   ├── causal/
 │   │   ├── propensity_score.py         # PSM: logistic PS, NN matching, balance checks
@@ -73,7 +74,7 @@ retail-impact-measurement-framework/
 │   └── utils/
 │       ├── statistical_tests.py        # Bootstrap CI, permutation tests, KS, Levene
 │       └── visualization.py            # Propensity plots, Love plots, waterfall charts
-├── tests/                              # 20 unit tests covering all modules
+├── tests/                              # 45+ tests covering all modules
 ├── docs/
 │   └── methodology.md                  # Statistical methodology documentation
 ├── .github/workflows/ci.yml            # Lint + test on Python 3.9/3.10/3.11
@@ -121,6 +122,11 @@ In production, the pipeline runs as a Databricks Job:
 - Seasonality (holiday ramp): 18%
 - Store characteristics (selection): 6%
 - Residual: 2%
+
+### Sensitivity & Targeting
+- Rosenbaum bounds: results robust up to Gamma ~2.1 (strong)
+- Supercenters show highest promotion lift — prioritize for Q1 2026 expansion
+- Express stores show minimal lift — may not justify per-store cost
 
 ## Methodology
 
