@@ -61,7 +61,7 @@ def decompose_revenue(panel: pd.DataFrame,
     # components partially offset the promotion effect
     promo_share = abs(promo) / abs(total_change) * 100 if total_change != 0 else 0
 
-    return AttributionResult(
+    result = AttributionResult(
         promotion_effect=promo,
         seasonality_effect=season,
         trend_effect=trend,
@@ -70,3 +70,14 @@ def decompose_revenue(panel: pd.DataFrame,
         total_change=total_change,
         promotion_share=min(promo_share, 100),
     )
+
+    # Sanity check: components should roughly sum to total change
+    component_sum = promo + season + trend + result.residual
+    if abs(component_sum - total_change) > 0.01:
+        import warnings
+        warnings.warn(
+            f"Attribution components sum to {component_sum:.4f} but total "
+            f"change is {total_change:.4f} — check model specification"
+        )
+
+    return result
