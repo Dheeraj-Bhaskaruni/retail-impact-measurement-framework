@@ -131,6 +131,12 @@ def run_psm(df: pd.DataFrame,
 
     balance = assess_balance(df, covariates, treatment_col, matches)
 
+    # Log match quality summary
+    import logging
+    logger = logging.getLogger(__name__)
+    n_unbalanced = (balance["balanced"] == False).sum()
+    logger.info(f"PSM: {len(matches)} matched pairs, {n_unbalanced} unbalanced covariates")
+
     return PSMResult(
         att=att, se=se, ci_lower=ci_lower, ci_upper=ci_upper,
         p_value=p_value, n_treated=int(df[treatment_col].sum()),
